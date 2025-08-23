@@ -835,7 +835,6 @@
 ./beta/ascendCalibrator.js
 ./beta/index.html
 ./beta/minigamePantheon.js
-./.github/workflows/update.yml
 ./ascendCalibrator.js
 ./index.html
 ./minigamePantheon.js
