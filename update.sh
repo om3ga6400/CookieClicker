@@ -23,7 +23,7 @@ xargs -P 8 -a snd/_sndList.txt -I{} wget -O snd/{} "https://orteil.dashnet.org/c
 xargs -P 8 -a loc/_locList.txt -I{} wget -O loc/{} "https://orteil.dashnet.org/cookieclicker/beta/loc/{}"
 xargs -P 8 -a img/_imgList.txt -I{} wget -O img/{} "https://orteil.dashnet.org/cookieclicker/beta/img/{}"
 cd ../
-find . -type f ! -path './.git/*' ! -path '/.github*' ! -name '_delList.txt' ! -name '_miscList.txt' ! -name 'README.md' ! -iname 'update.sh' > _delList.txt
+find . -type f ! -path './.git/*' ! -path '/.github*' ! -name 'update.yml' ! -name '_delList.txt' ! -name '_miscList.txt' ! -name 'README.md' ! -iname 'update.sh' > _delList.txt
 grep -Eho '["'\''][^/"'\'']+\.(js|css|html|json|xml)(\?[^"'\''"]*)?["'\'']' $(grep -Fxv '' _delList.txt) |
 grep -Ev '["'\''](https?:|\/\/)' |
 sed -E "s/^['\"]//;s/['\"].*//;s/\?.*//" |
