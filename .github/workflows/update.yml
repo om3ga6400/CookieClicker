@@ -6,7 +6,7 @@ permissions:
 
 on:
   schedule:
-    - cron: "0 0 * * 1"
+    - cron: "0 0 */14 * *"  # Runs every 14 days at midnight
   workflow_dispatch:
 
 jobs:
@@ -26,8 +26,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: "Automated update via update.sh"
+          commit-message: "Auto-update $(date +'%Y-%m-%d')"
           branch: ${{ env.BRANCH_NAME }}
-          title: "Automated update (${{ env.BRANCH_NAME }})"
-          body: "This PR was created automatically by GitHub Actions"
+          title: "Auto-update $(date +'%Y-%m-%d')"
+          body: "This PR was created automatically by GitHub Actions on $(date +'%Y-%m-%d')"
           token: ${{ secrets.GITHUB_TOKEN }}
