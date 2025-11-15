@@ -1,11 +1,6 @@
 ascendCalibrator.js
-base64.js
-excanvas.compiled.js
-main.js
 minigameDungeon.js
 minigameGarden.js
 minigameGrimoire.js
 minigameMarket.js
 minigamePantheon.js
-showads.js
-style.css
