@@ -1,5 +1,4 @@
 ./main.js
-./showads.js
 ./excanvas.compiled.js
 ./base64.js
 ./snd/switch.mp3
@@ -399,7 +398,6 @@
 ./grab.txt
 ./style.css
 ./beta/main.js
-./beta/showads.js
 ./beta/excanvas.compiled.js
 ./beta/base64.js
 ./beta/snd/switch.mp3
