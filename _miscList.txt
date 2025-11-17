@@ -7,5 +7,4 @@ minigameGarden.js
 minigameGrimoire.js
 minigameMarket.js
 minigamePantheon.js
-showads.js
 style.css
