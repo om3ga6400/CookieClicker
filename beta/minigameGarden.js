@@ -769,8 +769,8 @@ M.launch=function()
 						else if (name=='ichorpuff') {ageMult=0.5;powerMult=0.5;range=1;}
 						
 						//by god i hope these are right
-						if (ageMult>=1) ageMult=(ageMult-1)*mult+1; else if (mult>=1) ageMult=1/((1/ageMult)*mult); else ageMult=1-(1-ageMult)*mult;
-						if (powerMult>=1) powerMult=(powerMult-1)*mult+1; else if (mult>=1) powerMult=1/((1/powerMult)*mult); else powerMult=1-(1-powerMult)*mult;
+						if (ageMult>=1) ageMult=(ageMult-1)*mult+1;// else if (mult>=1) ageMult=1/((1/ageMult)*mult); else ageMult=1-(1-ageMult)*mult;
+						if (powerMult>=1) powerMult=(powerMult-1)*mult+1;// else if (mult>=1) powerMult=1/((1/powerMult)*mult); else powerMult=1-(1-powerMult)*mult;
 						
 						if (range>0) effectOn(x,y,range,[ageMult,powerMult,weedMult]);
 					}

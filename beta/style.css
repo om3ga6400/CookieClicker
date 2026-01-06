@@ -1,5 +1,5 @@
 ﻿/* reset CSS */
-html, body, div, span, applet, object, iframe,
+/*html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -19,11 +19,11 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
-}
+}*/
+div,span,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0;}
 body {
 	line-height: 1;
 }
@@ -382,9 +382,8 @@ a.option.neato:active
 	background-color:#999;
 }
 
-/*=====================================================================================
-oh forget it this is just a mess
-=======================================================================================*/
+
+
 #backgroundLayers, #backgroundLayers div
 {
 	width:100%;
@@ -405,6 +404,7 @@ oh forget it this is just a mess
 
 .offWeb #topBar{display:none;}
 .onWeb #topBar{visibility:visible;}
+
 #topBar
 {
 	visibility:hidden;
@@ -1076,6 +1076,14 @@ input[type=range]:active::-ms-thumb,input[type=range]:hover::-ms-thumb {backgrou
 	pointer-events:none;
 	opacity:1;
 }
+.noTransition
+{
+	-webkit-transition:none !important;
+	-moz-transition:none !important;
+	-ms-transition:none !important;
+	-o-transition:none !important;
+	transition:none !important;
+}
 .wobbling
 {
 	animation:wobble 0.1s ease-out;
@@ -1581,6 +1589,7 @@ q:after
 	width:220px;
 	padding:8px;
 	pointer-events:none;
+	z-index:100000000;
 }
 #legacyButton:hover>#ascendTooltip
 {display:block;}
@@ -1927,20 +1936,7 @@ from {top:20px;opacity:0;}
 	0% 		{background:#f00;}
 	100% 	{}
 }
-.punchDown{animation:punchDown 0.3s ease-out;}
-@keyframes punchDown
-{
-	0% 		{transform:translate(0px,0px);}
-	20% 		{transform:translate(0px,4px);}
-	100% 		{transform:translate(0px,0px);}
-}
-.punchUp{animation:punchUp 0.3s ease-out;}
-@keyframes punchUp
-{
-	0% 		{transform:translate(0px,0px);}
-	20% 		{transform:translate(0px,-4px);}
-	100% 		{transform:translate(0px,0px);}
-}
+
 
 #buildingsMaster
 {
@@ -2810,7 +2806,7 @@ from {background-position:0px 0px;}
 	font-size:15px;
 }
 .large .fancyText{font-size:20px;}
-#prompt h3:before,#prompt h3:after,.prompt h3:before,.prompt h3:after
+#prompt h3:before,#prompt h3:after,.prompt h3:before,.prompt h3:after,.winged:before,.winged:after
 {
 	content:'';
 	display:block;
@@ -2819,12 +2815,12 @@ from {background-position:0px 0px;}
 	position:absolute;
 	top:-4px;
 }
-#prompt h3:before,.prompt h3:before
+#prompt h3:before,.prompt h3:before,.winged:before
 {
 	background:url(img/featherLeft.png) no-repeat;
 	left:-39px;
 }
-#prompt h3:after,.prompt h3:after
+#prompt h3:after,.prompt h3:after,.winged:after
 {
 	background:url(img/featherRight.png) no-repeat;
 	right:-39px;
@@ -3048,8 +3044,8 @@ p
 */
 
 
-.green,b.green{color:#3f0;}.green b{color:inherit;}
-.red,b.red{color:#f30;}.red b{color:inherit;}
+.green,b.green{color:#73fa0c;}.green b{color:inherit;}/* #3f0 */
+.red,b.red{color:#fc0d25;}.red b{color:inherit;}/* #f30 */
 .gray,b.gray{color:#999;}.gray b{color:inherit;}
 
 #versionNumber
@@ -3285,6 +3281,8 @@ SUPPORT
 	z-index:10000000;
 	font-size:30px !important;
 }
+
+#cf_alert_div{z-index:1000000 !important;}
 
 /*=====================================================================================
 NEW AD DISPLAY

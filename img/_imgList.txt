@@ -271,6 +271,7 @@ templeGrandma.png
 timemachine.png
 timemachineBackground.png
 timerBars.png
+tingusgoose.png
 tinyEyeEmpty.png
 tinyEyeOff.png
 tinyEyeOn.png

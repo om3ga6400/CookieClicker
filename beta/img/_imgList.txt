@@ -80,6 +80,7 @@ dashnetLogo.png
 discord.png
 dragon.png
 dragonBG.png
+dragonBG2.png
 dragonFrame.png
 dungeonDot.png
 dungeonFactory.png
@@ -89,6 +90,7 @@ dungeonIcons.png
 dungeonItems.png
 dungeonMapFactory.jpg
 dungeonOverlay.png
+dungeonPictos.gif
 dungeonPictos.png
 dungeonTiles.png
 easterEggs.png
@@ -97,6 +99,7 @@ empty.png
 emptyFrame.png
 factory.png
 factoryBackground.png
+familiars.png
 farm.png
 farmBackground.png
 farmerGrandma.png
@@ -117,6 +120,7 @@ girlscoutLucky.png
 glint.jpg
 glint.png
 goldCookie.png
+goldCookieWreath.png
 grandma.png
 grandmaBackground.png
 grandmas1.jpg
@@ -125,6 +129,7 @@ grandmas3.jpg
 grandmasGrandma.png
 grimoireBG.png
 heartStorm.png
+heartStormWrath.png
 hearts.png
 heavenRing1.jpg
 heavenRing2.jpg
@@ -164,7 +169,11 @@ milkCherry.png
 milkChocolate.png
 milkCoconut.png
 milkCoffee.png
+milkCol1Mask.jpg
+milkCol2Mask.jpg
+milkDarkMask.jpg
 milkDragonfruit.png
+milkFXbubbles.jpg
 milkFire.png
 milkGold.png
 milkGreenFire.png
@@ -173,6 +182,7 @@ milkHoney.png
 milkLicorice.png
 milkLime.png
 milkMaple.png
+milkMask.png
 milkMelon.png
 milkMint.png
 milkOrange.png
@@ -228,6 +238,7 @@ prism.png
 prismBackground.png
 rainbowGrandma.png
 raspberryWave.png
+ripple.png
 roundFrameBorder.png
 roundedPanelBG.png
 roundedPanelBGS.png
@@ -257,6 +268,8 @@ smallCookies.png
 smallDollars.png
 snow.jpg
 snow2.jpg
+snow2Wrath.jpg
+spamCookies.gif
 sparkles.jpg
 spellBG.png
 spinnyBig.png
@@ -271,6 +284,7 @@ templeGrandma.png
 timemachine.png
 timemachineBackground.png
 timerBars.png
+tingusgoose.png
 tinyEyeEmpty.png
 tinyEyeOff.png
 tinyEyeOn.png
@@ -296,6 +310,7 @@ wizardtowerBackground.png
 workerGrandma.png
 wrathContract.png
 wrathCookie.png
+wrathCookieWreath.png
 wrinkler.png
 wrinklerBits.png
 wrinklerBitsOld.png
