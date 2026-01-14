@@ -414,7 +414,6 @@
 ./snd/squish2.mp3
 ./snd/sell4.mp3
 ./snd/clickOn.mp3
-./minigameDungeon.js
 ./beta/excanvas.compiled.js
 ./beta/ascendCalibrator.js
 ./beta/img/portraitChip.png
@@ -454,6 +453,7 @@
 ./beta/img/milkGreenFire.png
 ./beta/img/pointGlow.gif
 ./beta/img/milkMask.png
+./beta/img/flareGold.png
 ./beta/img/featherRight.png
 ./beta/img/gardenPlots.png
 ./beta/img/milkBanana.png
@@ -478,6 +478,7 @@
 ./beta/img/wizardtowerBackground.png
 ./beta/img/messageBG.png
 ./beta/img/panelMenu.png
+./beta/img/topbarPS.png
 ./beta/img/cookieShower1.png
 ./beta/img/milkSoy.png
 ./beta/img/antiGrandma.png
@@ -501,14 +502,17 @@
 ./beta/img/linkPulse.gif
 ./beta/img/templeGrandma.png
 ./beta/img/portraitDoe.png
+./beta/img/CookieClickerLogoTiny.png
 ./beta/img/milkStrawberry.png
 ./beta/img/dungeonItems.png
 ./beta/img/grandmas3.jpg
+./beta/img/topbarDiv.png
 ./beta/img/bgMoney.jpg
 ./beta/img/shineGold.png
 ./beta/img/milkDarkMask.jpg
 ./beta/img/girlscoutLucky.png
 ./beta/img/dungeonOverlay.png
+./beta/img/topbarSwitch.png
 ./beta/img/bgCoarse.jpg
 ./beta/img/grandmas2.jpg
 ./beta/img/fractalEngineBackground.png
@@ -548,6 +552,7 @@
 ./beta/img/milkFXbubbles.jpg
 ./beta/img/dungeonPictos.gif
 ./beta/img/shine.png
+./beta/img/fangamerClicker.png
 ./beta/img/infoBG.png
 ./beta/img/roundedPanelRight.png
 ./beta/img/shinyWinkler.png
@@ -568,6 +573,7 @@
 ./beta/img/bgSilver.jpg
 ./beta/img/milkLime.png
 ./beta/img/bunnyGrandma.png
+./beta/img/DashnetLogoTiny.png
 ./beta/img/winterWinkler.png
 ./beta/img/dungeonDot.png
 ./beta/img/cortexBackground.png
@@ -603,9 +609,12 @@
 ./beta/img/antimattercondenserBackground.png
 ./beta/img/spellBG.png
 ./beta/img/factoryBackground.png
+./beta/img/topbarMobile.png
 ./beta/img/milkRose.png
+./beta/img/flare.png
 ./beta/img/winterFrame.png
 ./beta/img/heartStormWrath.png
+./beta/img/flareSuckRed.png
 ./beta/img/panelGradientLeft.png
 ./beta/img/portraitLucky.png
 ./beta/img/snow2.jpg
@@ -643,7 +652,9 @@
 ./beta/img/factory.png
 ./beta/img/heraldFlag.png
 ./beta/img/cookieShower3.png
+./beta/img/topbarXbox.png
 ./beta/img/portraitCrumb.png
+./beta/img/topbarSteam.png
 ./beta/img/dungeonHeroes.png
 ./beta/img/panelMenu3.png
 ./beta/img/bankGrandma.png
@@ -689,6 +700,7 @@
 ./beta/img/grandmas1.jpg
 ./beta/img/youLight.png
 ./beta/img/blackGradientSmallTop.png
+./beta/img/fangamerClickerPic.png
 ./beta/img/panelMenu2.png
 ./beta/img/mine.png
 ./beta/img/bgSky.jpg
@@ -859,7 +871,6 @@
 ./beta/snd/sell4.mp3
 ./beta/snd/powerClick1.mp3
 ./beta/snd/clickOn.mp3
-./beta/minigameDungeon.js
 ./beta/minigamePantheon.js
 ./beta/style.css
 ./beta/minigameMarket.js

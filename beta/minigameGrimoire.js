@@ -503,7 +503,7 @@ M.launch=function()
 		//run each draw frame
 		if (Game.drawT%5==0)
 		{
-			M.magicBarTextL.innerHTML=Math.min(Math.floor(M.magicM),Beautify(M.magic))+'/'+Beautify(Math.floor(M.magicM))+(M.magic<M.magicM?(' ('+loc("+%1/s",Beautify((M.magicPS||0)*Game.fps,2))+')'):'');
+			M.magicBarTextL.innerHTML=Math.min(Math.floor(M.magicM),Beautify(M.magic))+'/'+Beautify(Math.floor(M.magicM))+(M.magic<M.magicM?(' ('+loc("+%1/s",Beautify(Math.max((M.magicPS||0)*Game.fps,0.01),2))+')'):'');
 			M.magicBarFullL.style.width=((M.magic/M.magicM)*100)+'%';
 			M.magicBarL.style.width=(M.magicM*3)+'px';
 			M.infoL.innerHTML=loc("Spells cast: %1 (total: %2)",[Beautify(M.spellsCast),Beautify(M.spellsCastTotal)]);

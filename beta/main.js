@@ -1,9 +1,9 @@
 ﻿/*
-All this code is copyright Orteil, 2013-2025.
+All this code is copyright Orteil, 2013-2026.
 	-with some help, advice and fixes by Nicholas Laux, Debugbro, Opti, the folks at Playsaurus, and lots of people on reddit, Discord, and the DashNet forums
 	-also includes a bunch of snippets found on stackoverflow.com and others
 	-want to mod the game? scroll down to the "MODDING API" section
-Hello, and welcome to the joyous mess that is main.js. Code contained herein is not guaranteed to be good, consistent, or sane. Most of this is years old at this point and harkens back to simpler, cruder times. In particular I've tried to maintain compatibility with fairly old versions of javascript, which means luxuries such as 'let', arrow functions and string literals are unavailable.
+Hello, and welcome to the joyous mess that is main.js. Code contained herein is not guaranteed to be good, consistent, or sane. While you may peruse it for educational purposes, please keep in mind this file has been continually updated since 2013 and may be crude in some parts, reflecting my differing programming skills over the years. For compatibility reasons (and because of my disdain for precompilers), this game strictly employs javascript as it was in 2013 (ES5) - which means luxuries such as 'let', arrow functions and string literals are unavailable. Don't let that stop you when writing mods though!
 As Cookie Clicker is rife with puns and tricky wordplay, localization was never intended to be possible - but ended up happening anyway as part of the Steam port. As a result, usage of strings is somewhat unorthodox in some places.
 Have a nice trip, and stay safe.
 Spoilers ahead.
@@ -333,7 +333,7 @@ function fixScrollbars()
 	document.body.insertAdjacentHTML('beforeend','<div id="scrollbarFixer" style="opacity:0;position:absolute;left:0;top:0;width:50px;height:50px;overflow:scroll;pointer-events:none;"></div>');
 	var el=l('scrollbarFixer');
 	var scrollbarWidth=Math.max(0,el.offsetWidth-el.clientWidth);
-	el.remove();
+	el.parentNode.removeChild(el);
 	
 	var style=document.createElement('style');
 	style.innerText=
@@ -1330,6 +1330,7 @@ else if (App && new URL(window.location.href).searchParams.get('beta')) Game.bet
 Game.https=!App?((location.protocol!='https:')?false:true):true;
 Game.SaveTo='CookieClickerGame';
 if (Game.beta) Game.SaveTo='CookieClickerGameBeta';
+if (SAVESUFFIX) Game.SaveTo+='-'+SAVESUFFIX;
 if (App && new URL(window.location.href).searchParams.get('modless')) Game.modless=1;
 Game.local=LOCAL;
 if (App) Game.local=true;
@@ -1447,11 +1448,12 @@ Game.Launch=function()
 	
 	Game.updateLog+=
 	'</div><div class="subsection update small">'+
-	'<div class="title">23/12/2025 - heralds return</div>'+
-	'<div class="listing">&bull; we\'re retiring our Patreon! the web version\'s heralds (previously broken) now depend on current Steam players</div>'+
-	'<div class="listing">&bull; new seasonal golden cookie graphics (ported back from the mobile version)</div>'+
+	'<div class="title">01/13/2026 - housekeeping</div>'+
+	(!App?'<div class="listing">&bull; we\'re retiring our Patreon! the web version\'s heralds (previously broken) now depend on current Steam players</div>':'')+
+	'<div class="listing">&bull; updated cookie halo and seasonal golden cookie graphics (ported back from the mobile version)</div>'+
 	'<div class="listing">&bull; modified math for random drops</div>'+
 	'<div class="listing">&bull; various small tweaks & fixes</div>'+
+	'<div class="listing">&bull; check out the <a href="https://fanga.me/r/cookie-clicker-collection" target="_blank">Cookie Clicker clicker on Fangamer</a>! there\'s shirts too!</div>'+
 	
 	'</div><div class="subsection update small">'+
 	'<div class="title">01/02/2025 - language patch</div>'+
@@ -2099,13 +2101,6 @@ Game.Launch=function()
 		
 		l('versionNumber').innerHTML='v. '+Game.version+(!App?('<div id="httpsSwitch" style="cursor:pointer;display:inline-block;background:url(img/'+(Game.https?'lockOn':'lockOff')+'.png);width:16px;height:16px;position:relative;top:4px;left:0px;margin:0px -2px;"></div>'):'')+(Game.beta?' <span style="color:#ff0;">beta</span>':'');
 		
-		if (!App)
-		{
-			if (Game.beta) {var me=l('linkVersionBeta');me.parentNode.removeChild(me);}
-			else if (Game.version==1.0466) {var me=l('linkVersionOld');me.parentNode.removeChild(me);}
-			else {var me=l('linkVersionLive');me.parentNode.removeChild(me);}
-		}
-		
 		Game.lastActivity=Date.now();//reset on mouse move, key press or click
 		
 		//latency compensator stuff
@@ -2269,7 +2264,7 @@ Game.Launch=function()
 				else if (prevW<Game.tickerTooNarrow && Game.windowW>=Game.tickerTooNarrow) Game.getNewTicker(true);
 			}
 			
-			for (var i=0;i<Game.onResizeCallbacks.length;i++){Game.onResizeCallbacks[i]();}
+			for (var i=0;i<Game.onResizeCallbacks.length;i++){Game.onResizeCallbacks[i](w,h);}
 		}
 		Game.resize();
 		
@@ -2567,6 +2562,7 @@ Game.Launch=function()
 		}
 		Game.attachTooltip=function(el,func,origin)
 		{
+			if (!el) return;
 			if (typeof func==='string')
 			{
 				var str=func;
@@ -2649,6 +2645,8 @@ Game.Launch=function()
 		
 		if (!App)
 		{
+			//top bar stuff on web
+			
 			Game.attachTooltip(l('httpsSwitch'),'<div style="padding:8px;width:350px;text-align:center;font-size:11px;">'+loc("You are currently playing Cookie Clicker on the <b>%1</b> protocol.<br>The <b>%2</b> version uses a different save slot than this one.<br>Click this lock to reload the page and switch to the <b>%2</b> version!",[(Game.https?'HTTPS':'HTTP'),(Game.https?'HTTP':'HTTPS')])+'</div>','this');
 			AddEvent(l('httpsSwitch'),'click',function(){
 				PlaySound('snd/pop'+Math.floor(Math.random()*3+1)+'.mp3',0.75);
@@ -2672,8 +2670,110 @@ Game.Launch=function()
 			Game.attachTooltip(l('topbarRandomgen'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you write random generators.</div>','this');
 			Game.attachTooltip(l('topbarIGM'),'<div style="padding:8px;width:250px;text-align:center;">A thing we made that lets you create your own idle games using a simple scripting language.</div>','this');
 			l('changeLanguage').innerHTML=loc("Change language");
-			l('links').childNodes[0].nodeValue=loc("Other versions");
-			//l('linkVersionBeta').innerHTML=loc("Beta");
+			l('topbarOtherVersions').childNodes[0].nodeValue=loc("Other versions");
+			
+			if (!App)
+			{
+				var topBarCompressMinWidth=-1;
+				Game.onResizeCallbacks.push(function(w,h){
+					//compress top bar if screen is too narrow
+					//when compressed, elements with .showCompressed will show and elements with .hideCompressed will hide
+					for (var i=0;i<2;i++)
+					{
+						if (Math.abs(l('topBarEnd').getBoundingClientRect().top)>2) topBarCompressMinWidth=Math.max(topBarCompressMinWidth,w);//newline triggered
+						if (w<=topBarCompressMinWidth) l('topBar').classList.add('compressed');
+						else l('topBar').classList.remove('compressed');
+					}
+				});
+			}
+			
+			getJson(DataDir+'cookieclickerinfo.json',function(r){
+				if (r)
+				{
+					var versions=r.versions||[];
+					var url=new URL(window.location.href);url=url.origin+url.pathname.replace(/\/$/,'');
+					
+					//other versions
+					var str='';
+					str+='<div class="hoverheader">'+loc("Other versions")+'</div>';
+					str+='<div class="hoverable">';
+						for (var i=0;i<r.versions.length;i++)
+						{
+							var me=r.versions[i];
+							if (me.off) continue;
+							if (!EN)
+							{
+								if (me.v=='LIVE') me.text="Live";
+								else if (me.v=='BETA') me.text="Beta";
+								else if (me.v=='CLASSIC') me.text="Classic";
+							}
+							var style=me.style||'';
+							if (me.url) me.url=me.url.replace('$DIR',window.location.origin);
+							if (me.url && url==me.url) style+='display:none;';//hide current
+							str+='<div style="'+style+'">';
+							if (me.url) str+='<a href="'+me.url+'" target="_blank">'+me.text+'</a>';
+							else str+=me.text;
+							str+='</div>';
+						}
+					str+='</div>';
+					l('topbarOtherVersions').innerHTML=str;
+					
+					//extra css
+					var extraCss=r.extraCss||'';
+					if (Array.isArray(extraCss)) extraCss=extraCss.join('\n');
+					var css=document.createElement('style');
+					css.type='text/css';
+					css.innerHTML=extraCss;
+					document.head.appendChild(css);
+					
+					//links
+					var links=r.links||[];
+					var str='';
+					for (var i=0;i<r.links.length;i++)
+					{
+						var me=r.links[i];
+						if (me.off) continue;
+						if (me.remove)
+						{
+							let rem=me.remove.split(' ');
+							for (var ii=0;ii<rem.length;ii++)
+							{
+								let id=rem[ii];
+								if (id[id.length-1]=='+')//"id+" means remove parent too
+								{
+									id=id.slice(0,-1);
+									let el=l(id);
+									if (el && el.parentNode) el.parentNode.parentNode.removeChild(el.parentNode);
+								}
+								else
+								{
+									let el=l(id);
+									if (el) el.parentNode.removeChild(el);
+								}
+							}
+						}
+						str+='<div class="topLink'+(me.class?(' '+me.class):'')+'" style="'+(me.style||'')+'">';
+							if (me.url) str+='<a id="topLink-'+i+'" href="'+me.url.replace('$DIR',window.location.origin)+'" target="_blank">'+me.text+'</a>';
+							else str+=me.text;
+						str+='</div>';
+					}
+					l('topbarOtherVersions').insertAdjacentHTML('beforebegin',str);
+					
+					//link tooltips
+					for (var i=0;i<r.links.length;i++)
+					{
+						var me=r.links[i];
+						if (me.off) continue;
+						if (me.tooltip)
+						{
+							var el=l('topLink-'+i);
+							if (!el) continue;
+							Game.attachTooltip(el,'<div style="padding:8px;width:250px;text-align:center;">'+me.tooltip+'</div>','this');
+						}
+					}
+				}
+			});
+			
 		}
 		
 		Game.attachTooltip(l('heralds'),function(){
@@ -6064,8 +6164,9 @@ Game.Launch=function()
 		=======================================================================================*/
 		//generic particles (falling cookies etc)
 		//only displayed on left section
+		//a horridly convoluted system. nevertheless
 		Game.particles=[];
-		Game.particlesN=50;
+		Game.particlesN=64;
 		for (var i=0;i<Game.particlesN;i++)
 		{
 			Game.particles[i]={x:0,y:0,xd:0,yd:0,w:64,h:64,z:0,size:1,dur:2,life:-1,r:0,pic:'smallCookies.png',picId:0,picPos:[0,0]};
@@ -6078,7 +6179,7 @@ Game.Launch=function()
 				var me=Game.particles[i];
 				if (me.life!=-1)
 				{
-					if (!me.text) me.yd+=0.2+Math.random()*0.1;
+					if (!me.text) me.yd+=0.25;//0.2+Math.random()*0.1;
 					me.x+=me.xd;
 					me.y+=me.yd;
 					//me.y+=me.life*0.25+Math.random()*0.25;
@@ -6119,6 +6220,11 @@ Game.Launch=function()
 				me.y=y;
 				me.xd=xd||0;
 				me.yd=yd||0;
+				if (!auto)
+				{
+					me.xd=Math.random()*2-1;
+					me.yd=4+Math.random()*2;
+				}
 				me.size=size||1;
 				me.z=z||0;
 				me.dur=dur||2;
@@ -6154,6 +6260,7 @@ Game.Launch=function()
 			ctx.font='20px Merriweather';
 			ctx.textAlign='center';
 			
+			ctx.save();
 			for (var i=0;i<Game.particlesN;i++)
 			{
 				var me=Game.particles[i];
@@ -6161,7 +6268,7 @@ Game.Launch=function()
 				{
 					if (me.life!=-1)
 					{
-						var opacity=1-(me.life/(Game.fps*me.dur));
+						var opacity=Math.pow(1-(me.life/(Game.fps*me.dur)),0.5);
 						ctx.globalAlpha=opacity;
 						if (me.text)
 						{
@@ -6169,7 +6276,6 @@ Game.Launch=function()
 						}
 						else
 						{
-							ctx.save();
 							ctx.translate(me.x,me.y);
 							ctx.rotate((me.r/360)*Math.PI*2);
 							var w=64;
@@ -6185,11 +6291,13 @@ Game.Launch=function()
 								if (me.pic=='wrinklerBits.png' || me.pic=='shinyWrinklerBits.png') {w=100;h=200;}
 								ctx.drawImage(Pic(me.pic),(me.picId%8)*w,0,w,h,-w/2*me.size,-h/2*me.size,w*me.size,h*me.size);
 							}
-							ctx.restore();
+							ctx.rotate(-(me.r/360)*Math.PI*2);
+							ctx.translate(-me.x,-me.y);
 						}
 					}
 				}
 			}
+			ctx.restore();
 		}
 		
 		//text particles (popups etc)
@@ -8623,7 +8731,7 @@ Game.Launch=function()
 									choose([choose(['Lil\' $','Mini-$','$ '+(pic.id+2),'Attempt '+(pic.id+1),'Experiment '+(pic.id+1),'Not $','$, again','$, the sequel','$ '+(pic.id+2)+' Electric Boogaloo','Also $','$ (remixed)','The Other $','$, The Next Generation','$, part '+romanize(pic.id+2),'Revenge of $','The Return of $','$ reborn','$ in the flesh']),'$ "'+choose(['The Menace','The Artisan','The Relative','The Twin','The Specialist','The Officer','The Snitch','The Simpleton','The Genius','The Conformist','The Mistake','The Accident','Lab-grown','Vat Kid','Photocopy','Cloney','Ditto','Accounted For','Twitchy','Wacky','Zen','Rinse & Repeat','Spitting Image','Passing Resemblance','Nickname','Make It So','Deja-vu','Cookie','Clicky','Orteil','But Better','Guess Who','Transplant Fodder','Furthermore','One More Thing','Liquid','Second Chance','Offspring','Mulligan','Spare Parts'])+'" McClone']).replace('$',Game.bakeryName),
 								][cloneTitle];
 							}
-							Math.seedrandom();
+							//Math.seedrandom();//disables a certain exploit
 							var width=ctx.measureText(text).width+12;
 							var x=Math.max(0,Math.min(pic.x+32-width/2,this.canvas.width-width));
 							var y=10;
@@ -15626,7 +15734,7 @@ Game.Launch=function()
 				Game.cookieOriginY=Math.floor(ctx.canvas.height*0.4);
 				
 				if (Game.AscendTimer==0)
-				{	
+				{
 					if (Game.prefs.particles)
 					{
 						//falling cookies
@@ -15677,22 +15785,31 @@ Game.Launch=function()
 						var x=Game.cookieOriginX;
 						var y=Game.cookieOriginY;
 						
-						var r=Math.floor((Game.realT*0.5)%360);
 						ctx.save();
-						ctx.translate(x,y);
-						ctx.rotate((r/360)*Math.PI*2);
 						var alphaMult=1;
+						var invSpeed=0;
 						if (Game.bgType==2 || Game.bgType==4) alphaMult=0.5;
-						var pic='shine.png';
-						if (goodBuff) {pic='shineGold.png';alphaMult=1;}
-						else if (badBuff) {pic='shineRed.png';alphaMult=1;}
-						if (goodBuff && Game.prefs.fancy) ctx.globalCompositeOperation='lighter';
-						ctx.globalAlpha=0.5*alphaMult;
-						ctx.drawImage(Pic(pic),-s/2,-s/2,s,s);
-						ctx.rotate((-r*2/360)*Math.PI*2);
-						ctx.globalAlpha=0.25*alphaMult;
-						ctx.drawImage(Pic(pic),-s/2,-s/2,s,s);
+						var pic='flare.png';
+						if (goodBuff) {pic='flareGold.png';alphaMult=1;}
+						else if (badBuff) {pic='flareSuckRed.png';invSpeed=1;alphaMult=1;}
+						ctx.translate(x,y);
+						
+						var r1=(Game.realT/Game.fps/4)%1;
+						var r2=(Game.realT/Game.fps/4+0.5)%1;
+						if (invSpeed) {r1=1-r1;r2=1-r2;}
+						
+						ctx.rotate((((Game.realT*0.5)%360)/360)*Math.PI*2);
+						ctx.globalAlpha=Math.sin(r1*Math.PI)*alphaMult;
+						var s2=s*(0.5+Math.pow(r1,0.5));
+						ctx.drawImage(Pic(pic),-s2/2,-s2/2,s2,s2);
+						
+						ctx.rotate(Math.PI);
+						ctx.globalAlpha=Math.sin(r2*Math.PI)*alphaMult;
+						var s2=s*(0.5+Math.pow(r2,0.5));
+						ctx.drawImage(Pic(pic),-s2/2,-s2/2,s2,s2);
+						
 						ctx.restore();
+						
 						Timer.track('shine');
 				
 						if (Game.ReincarnateTimer>0)
@@ -16385,6 +16502,8 @@ Game.Launch=function()
 		setTimeout(function(){if (LOCAL || (typeof showAds==='undefined' && (!l('detectAds') || l('detectAds').clientHeight<1))) Game.addClass('noAds');},500);
 		l('offGameMessage').innerHTML='';
 		l('offGameMessageWrap').style.display='none';
+		
+		Game.resize();
 		Game.Loop();
 		Game.Draw();
 		
@@ -16958,9 +17077,9 @@ Game.Launch=function()
 			l('cookies').innerHTML=str;
 			Timer.track('cookie amount');
 			
-			for (var i in Game.Objects)
+			for (var i=0;i<Game.ObjectsById.length;i++)
 			{
-				var me=Game.Objects[i];
+				var me=Game.ObjectsById[i];
 				if (me.onMinigame && me.minigame.draw && !me.muted && !Game.onMenu) me.minigame.draw();
 			}
 			Timer.track('draw minigames');
@@ -16969,9 +17088,9 @@ Game.Launch=function()
 			{
 				//if (Game.prefs.monospace) {l('cookies').className='title monospace';} else {l('cookies').className='title';}
 				var lastLocked=0;
-				for (var i in Game.Objects)
+				for (var i=0;i<Game.ObjectsById.length;i++)
 				{
-					var me=Game.Objects[i];
+					var me=Game.ObjectsById[i];
 					
 					//make products full-opacity if we can buy them
 					var classes='product';
@@ -16985,7 +17104,7 @@ Game.Launch=function()
 				
 				//make upgrades full-opacity if we can buy them
 				var lastPrice=0;
-				for (var i in Game.UpgradesInStore)
+				for (var i=0;i<Game.UpgradesInStore.length;i++)
 				{
 					var me=Game.UpgradesInStore[i];
 					if (!me.bought)
@@ -17090,7 +17209,7 @@ Game.Launch=function()
 		}
 		else requestAnimationFrame(Game.Draw);*/
 		if (Game.visible) Game.Draw();
-		//if (Game.visible) requestAnimationFrame(Game.Draw);
+		//if (Game.visible) requestAnimationFrame(Game.Draw);//why is this slower?
 		
 		//if (!hasFocus) Game.tooltip.hide();
 		

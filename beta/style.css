@@ -405,6 +405,10 @@ a.option.neato:active
 .offWeb #topBar{display:none;}
 .onWeb #topBar{visibility:visible;}
 
+.showCompressed{display:none;}
+#topBar.compressed .showCompressed{display:initial;}
+#topBar.compressed .hideCompressed{display:none;}
+
 #topBar
 {
 	visibility:hidden;
@@ -420,7 +424,8 @@ a.option.neato:active
 {
 	display:inline-block;
 	float:left;
-	border-right:1px solid #000;
+	/*border-right:1px solid #000;
+	border-bottom:3px solid transparent;*/
 	box-shadow:0px 0px 3px 1px rgba(255,255,255,0.2) inset;
 	padding:7px 8px 9px 8px;
 }
@@ -439,14 +444,62 @@ a.orangeLink,#topBar a.orangeLink
 a.orangeLink:hover,#topBar a.orangeLink:hover
 {color:#ff9580;text-shadow:0px 0px 3px #f65f4d;}
 
-#topBar>#links
+#topBar
+{
+	color:rgba(255,255,255,0.3);
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	font-size:15px;
+	text-shadow:0px 1px 2px #000;
+	letter-spacing:-0.35px;
+}
+#topBar>div
+{
+	box-shadow:none;
+	position:relative;
+	z-index:1;
+	padding:7px 6px 10px 6px;
+	margin-right:1px;
+}
+#topBar>div:after
+{
+	content:'';width:13px;height:32px;
+	position:absolute;right:-7px;top:0px;
+	background:url(img/topbarDiv.png);
+	border:none;
+	z-index:-1;
+	pointer-events:none;
+}
+#topBar img
+{
+	position:absolute;left:0px;top:0px;
+}
+#topBar a,#topBar .hoverheader
+{
+	/*
+	display:inline-block;
+	border-radius:2px;padding:5px 2px;
+	margin-left:-1px;margin-right:-1px;margin-top:-4px;
+	color:#222;
+	background:rgba(255,255,255,0.75);
+	box-shadow:0px -1px 0px #fff;
+	text-shadow:0px 1px 0px #fff;
+	opacity:0.3;
+	text-decoration:none;
+	font-weight:bold;*/
+	color:#fff;
+	opacity:0.6;
+	text-decoration:none;
+	transition:opacity 0.1s,text-shadow 0.2s;
+}
+#topBar a:hover,#topBar .hoverer:hover>.hoverheader{opacity:1;text-shadow:0px 0px 6px currentColor !important;}
+
+.hoverer
 {
 	position:relative;
 	z-index:10000000;
-	float:right;
 	cursor:pointer;
 }
-
 .hoverable
 {
 	text-align:left;
@@ -455,13 +508,16 @@ a.orangeLink:hover,#topBar a.orangeLink:hover
 	position:absolute;
 	left:0px;
 	top:32px;
-	padding-right:1px;
 	width:100%;
 	max-height:0px;
 	overflow:hidden;
-	color:#fff;
-	box-shadow:0px 0px 4px rgba(255,255,255,0.2) inset,0px 2px 4px 2px rgba(0,0,0,0.5),0px 0px 0px 1px rgba(0,0,0,0.5);
+	box-shadow:0px 0px 0px 1px #000,0px 2px 4px 2px rgba(0,0,0,0.5),0px 0px 0px 1px rgba(0,0,0,0.5);
 	background:url(img/darkNoise.jpg);
+	border-radius:0px 0px 8px 8px;
+}
+.hoverer:hover>.hoverheader
+{
+	color:rgba(255,255,255,0.5);
 }
 .hoverer:hover>.hoverable
 {
@@ -470,23 +526,22 @@ a.orangeLink:hover,#topBar a.orangeLink:hover
 }
 .hoverable>div
 {
-	padding:8px 12px;
+	box-shadow:1px 1px 0px rgba(255,255,255,0.1) inset,-1px -1px 0px rgba(0,0,0,0.1) inset;
+}
+.hoverable>div:nth-child(odd)
+{
+	background:rgba(255,255,255,0.05);
 }
 .hoverable a
 {
-	text-shadow:none;
-	display:block;
-	padding:5px 8px 7px 8px;
-}
-.hoverable a:nth-child(odd)
-{
-	background:rgba(255,255,255,0.05);
+	display:inline-block;
+	width:100%;
+	padding:5px 8px;
 }
 .hoverable a:hover
 {
 	text-shadow:none;
 	background:rgba(255,255,255,0.2);
-	box-shadow:0px 0px 4px rgba(255,255,255,0.2) inset,0px 0px 2px 1px rgba(0,0,0,0.5);
 }
 
 
