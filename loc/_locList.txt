@@ -12,4 +12,5 @@ NO.js
 PL.js
 PT-BR.js
 RU.js
+SV.js
 ZH-CN.js

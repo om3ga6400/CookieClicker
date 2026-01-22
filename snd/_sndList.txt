@@ -1,3 +1,4 @@
+bomp.mp3
 buy1.mp3
 buy2.mp3
 buy3.mp3
@@ -45,7 +46,20 @@ page.mp3
 pop1.mp3
 pop2.mp3
 pop3.mp3
+powerClick1.mp3
+powerClick1b.mp3
+powerClick2.mp3
+powerClick2b.mp3
+powerClick3.mp3
+powerClick3b.mp3
+powerShimmer.mp3
+powerSquish.mp3
+powerSquish1.mp3
+powerSquish2.mp3
+powerSquish3.mp3
 press.mp3
+roarOn.mp3
+roarOn2.mp3
 sell1.mp3
 sell2.mp3
 sell3.mp3

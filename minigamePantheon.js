@@ -144,8 +144,8 @@ M.launch=function()
 				me.icon=me.icon||[0,0];
 				var str='<div style="padding:8px 4px;min-width:350px;" id="tooltipGod">'+
 				'<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div>'+
-				'<div class="name">'+me.name+'</div>'+
-				'<div class="line"></div><div class="description"><div style="margin:6px 0px;font-weight:bold;">'+loc("Effects:")+'</div>'+
+				'<div class="name fancyText">'+me.name+'</div>'+
+				'<div class="line"></div><div class="description"><div class="effectsLabel">'+loc("Effects:")+'</div>'+
 					(me.descBefore?('<div class="templeEffect">'+me.descBefore+'</div>'):'')+
 					(me.desc1?('<div class="templeEffect templeEffect1"><div class="usesIcon shadowFilter templeGem templeGem1"></div>'+me.desc1+'</div>'):'')+
 					(me.desc2?('<div class="templeEffect templeEffect2"><div class="usesIcon shadowFilter templeGem templeGem2"></div>'+me.desc2+'</div>'):'')+
@@ -169,10 +169,16 @@ M.launch=function()
 				}
 				var str='<div style="padding:8px 4px;min-width:350px;" id="tooltipPantheonSlot">'+
 				(M.slot[id]!=-1?(
-					'<div class="name templeEffect" style="margin-bottom:12px;"><div class="usesIcon shadowFilter templeGem templeGem'+(parseInt(id)+1)+'"></div>'+loc(M.slotNames[id]+" slot")+'</div>'+
+					'<div style="text-align:center;margin-bottom:8px;">'+
+						'<div class="usesIcon shadowFilter templeGem templeGem'+(parseInt(id)+1)+'" style="margin:0px auto;"></div>'+
+						'<div class="templeEffect fancyText winged" style="font-size:16px;display:inline-block;padding:0px;margin:0px auto;">'+loc(M.slotNames[id]+" slot")+'</div><br>'+
+						/*'<div class="icon" style="display:block;margin:0px auto;background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div>'+
+						'<div class="templeEffect fancyText winged" style="font-size:16px;display:inline-block;padding:0px;margin:0px auto;">'+me.name+'</div>'+*/
+					'</div><div class="line"></div>'+
+					//'<div class="name templeEffect" style="margin-bottom:12px;"><div class="usesIcon shadowFilter templeGem templeGem'+(parseInt(id)+1)+'"></div>'+loc(M.slotNames[id]+" slot")+'</div>'+
 					'<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div>'+
-					'<div class="name">'+me.name+'</div>'+
-					'<div class="line"></div><div class="description"><div style="margin:6px 0px;font-weight:bold;">'+loc("Effects:")+'</div>'+
+					'<div class="name fancyText">'+me.name+'</div>'+
+					'<div class="line"></div><div class="description"><div class="effectsLabel">'+loc("Effects:")+'</div>'+
 						(me.activeDescFunc?('<div class="templeEffect templeEffectOn" style="padding:8px 4px;text-align:center;">'+me.activeDescFunc()+'</div>'):'')+
 						(me.descBefore?('<div class="templeEffect">'+me.descBefore+'</div>'):'')+
 						(me.desc1?('<div class="templeEffect templeEffect1'+(slot==0?' templeEffectOn':'')+'"><div class="usesIcon shadowFilter templeGem templeGem1"></div>'+me.desc1+'</div>'):'')+
@@ -182,7 +188,11 @@ M.launch=function()
 						(me.quote?('<q>'+me.quote+'</q>'):'')+
 					'</div>'
 				):
-				('<div class="name templeEffect"><div class="usesIcon shadowFilter templeGem templeGem'+(parseInt(id)+1)+'"></div>'+loc(M.slotNames[id]+" slot")+' ('+loc("empty")+')</div><div class="line"></div><div class="description">'+
+				('<div style="text-align:center;margin-bottom:8px;">'+
+					'<div class="usesIcon shadowFilter templeGem templeGem'+(parseInt(id)+1)+'" style="margin:0px auto;"></div>'+
+					'<div class="templeEffect fancyText winged" style="font-size:16px;display:inline-block;padding:0px;margin:0px auto;">'+loc(M.slotNames[id]+" slot")+'</div><br>'+
+				'</div><div class="block description">'+
+				//('<div class="name templeEffect"><div class="usesIcon shadowFilter templeGem templeGem'+(parseInt(id)+1)+'"></div>'+loc(M.slotNames[id]+" slot")+' ('+loc("empty")+')</div><div class="block description">'+
 				((M.slotHovered==id && M.dragging)?loc("Release to assign %1 to this slot.",'<b>'+M.dragging.name+'</b>'):loc("Drag a spirit onto this slot to assign it."))+
 				'</div>')
 				)+
@@ -204,12 +214,13 @@ M.launch=function()
 			if (slot!=-1 && M.slot[slot]!=-1)
 			{
 				M.godsById[M.slot[slot]].slot=god.slot;//swap
-				M.slot[god.slot]=M.slot[slot];
+				if (god.slot!=-1) M.slot[god.slot]=M.slot[slot];
 			}
 			else if (god.slot!=-1) M.slot[god.slot]=-1;
 			if (slot!=-1) M.slot[slot]=god.id;
 			god.slot=slot;
-			Game.recalculateGains=true;
+			Game.recalculateGains=1;
+			Game.storeToRefresh=1;
 		}
 		
 		M.dragging=false;
@@ -347,9 +358,12 @@ M.launch=function()
 		
 		'.templeGem{z-index:100;width:24px;height:24px;}'+
 		'.templeEffect{font-weight:bold;font-size:11px;position:relative;margin:0px -12px;padding:4px;padding-left:28px;}'+
-		'.description .templeEffect{border-top:1px solid rgba(255,255,255,0.15);background:linear-gradient(to top,rgba(255,255,255,0.1),rgba(255,255,255,0));}'+
+		//'.description .templeEffect{border-top:1px solid rgba(255,255,255,0.15);background:linear-gradient(to top,rgba(255,255,255,0.1),rgba(255,255,255,0));}'+
+		'.description .templeEffect{background:rgba(255,255,255,0.1);border-radius:4px;margin:3px;}'+
+		'.effectsLabel {background:rgba(255,255,255,0.1);border-radius:4px 4px 0px 0px;padding:2px 8px;margin:0px 0px -3px 0px;font-weight:bold;display:inline-block;}'+
 		'.templeEffect .templeGem{position:absolute;left:0px;top:0px;}'+
-		'.templeEffectOn{text-shadow:0px 0px 6px currentColor;color:#fff;}'+
+		//'.templeEffectOn{text-shadow:0px 0px 6px currentColor;color:#fff;}'+
+		'.description .templeEffectOn{background:rgba(255,255,255,0.2);box-shadow:0px 0px 0px 1px rgba(255,255,255,0.5);}'+
 		'.templeGod .templeGem{position:absolute;left:18px;bottom:8px;pointer-events:none;}'+
 		'.templeGem1{background-position:-1104px -720px;}'+
 		'.templeGem2{background-position:-1128px -720px;}'+

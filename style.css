@@ -1,5 +1,5 @@
 ﻿/* reset CSS */
-html, body, div, span, applet, object, iframe,
+/*html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -19,11 +19,11 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
-}
+}*/
+div,span,h1,h2,h3,h4,h5,h6,p{margin:0;padding:0;}
 body {
 	line-height: 1;
 }
@@ -382,9 +382,8 @@ a.option.neato:active
 	background-color:#999;
 }
 
-/*=====================================================================================
-oh forget it this is just a mess
-=======================================================================================*/
+
+
 #backgroundLayers, #backgroundLayers div
 {
 	width:100%;
@@ -405,6 +404,11 @@ oh forget it this is just a mess
 
 .offWeb #topBar{display:none;}
 .onWeb #topBar{visibility:visible;}
+
+.showCompressed{display:none;}
+#topBar.compressed .showCompressed{display:initial;}
+#topBar.compressed .hideCompressed{display:none;}
+
 #topBar
 {
 	visibility:hidden;
@@ -420,7 +424,8 @@ oh forget it this is just a mess
 {
 	display:inline-block;
 	float:left;
-	border-right:1px solid #000;
+	/*border-right:1px solid #000;
+	border-bottom:3px solid transparent;*/
 	box-shadow:0px 0px 3px 1px rgba(255,255,255,0.2) inset;
 	padding:7px 8px 9px 8px;
 }
@@ -439,14 +444,62 @@ a.orangeLink,#topBar a.orangeLink
 a.orangeLink:hover,#topBar a.orangeLink:hover
 {color:#ff9580;text-shadow:0px 0px 3px #f65f4d;}
 
-#topBar>#links
+#topBar
+{
+	color:rgba(255,255,255,0.3);
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	font-size:15px;
+	text-shadow:0px 1px 2px #000;
+	letter-spacing:-0.35px;
+}
+#topBar>div
+{
+	box-shadow:none;
+	position:relative;
+	z-index:1;
+	padding:7px 6px 10px 6px;
+	margin-right:1px;
+}
+#topBar>div:after
+{
+	content:'';width:13px;height:32px;
+	position:absolute;right:-7px;top:0px;
+	background:url(img/topbarDiv.png);
+	border:none;
+	z-index:-1;
+	pointer-events:none;
+}
+#topBar img
+{
+	position:absolute;left:0px;top:0px;
+}
+#topBar a,#topBar .hoverheader
+{
+	/*
+	display:inline-block;
+	border-radius:2px;padding:5px 2px;
+	margin-left:-1px;margin-right:-1px;margin-top:-4px;
+	color:#222;
+	background:rgba(255,255,255,0.75);
+	box-shadow:0px -1px 0px #fff;
+	text-shadow:0px 1px 0px #fff;
+	opacity:0.3;
+	text-decoration:none;
+	font-weight:bold;*/
+	color:#fff;
+	opacity:0.6;
+	text-decoration:none;
+	transition:opacity 0.1s,text-shadow 0.2s;
+}
+#topBar a:hover,#topBar .hoverer:hover>.hoverheader{opacity:1;text-shadow:0px 0px 6px currentColor !important;}
+
+.hoverer
 {
 	position:relative;
 	z-index:10000000;
-	float:right;
 	cursor:pointer;
 }
-
 .hoverable
 {
 	text-align:left;
@@ -455,13 +508,16 @@ a.orangeLink:hover,#topBar a.orangeLink:hover
 	position:absolute;
 	left:0px;
 	top:32px;
-	padding-right:1px;
 	width:100%;
 	max-height:0px;
 	overflow:hidden;
-	color:#fff;
-	box-shadow:0px 0px 4px rgba(255,255,255,0.2) inset,0px 2px 4px 2px rgba(0,0,0,0.5),0px 0px 0px 1px rgba(0,0,0,0.5);
+	box-shadow:0px 0px 0px 1px #000,0px 2px 4px 2px rgba(0,0,0,0.5),0px 0px 0px 1px rgba(0,0,0,0.5);
 	background:url(img/darkNoise.jpg);
+	border-radius:0px 0px 8px 8px;
+}
+.hoverer:hover>.hoverheader
+{
+	color:rgba(255,255,255,0.5);
 }
 .hoverer:hover>.hoverable
 {
@@ -470,23 +526,22 @@ a.orangeLink:hover,#topBar a.orangeLink:hover
 }
 .hoverable>div
 {
-	padding:8px 12px;
+	box-shadow:1px 1px 0px rgba(255,255,255,0.1) inset,-1px -1px 0px rgba(0,0,0,0.1) inset;
+}
+.hoverable>div:nth-child(odd)
+{
+	background:rgba(255,255,255,0.05);
 }
 .hoverable a
 {
-	text-shadow:none;
-	display:block;
-	padding:5px 8px 7px 8px;
-}
-.hoverable a:nth-child(odd)
-{
-	background:rgba(255,255,255,0.05);
+	display:inline-block;
+	width:100%;
+	padding:5px 8px;
 }
 .hoverable a:hover
 {
 	text-shadow:none;
 	background:rgba(255,255,255,0.2);
-	box-shadow:0px 0px 4px rgba(255,255,255,0.2) inset,0px 0px 2px 1px rgba(0,0,0,0.5);
 }
 
 
@@ -1076,6 +1131,14 @@ input[type=range]:active::-ms-thumb,input[type=range]:hover::-ms-thumb {backgrou
 	pointer-events:none;
 	opacity:1;
 }
+.noTransition
+{
+	-webkit-transition:none !important;
+	-moz-transition:none !important;
+	-ms-transition:none !important;
+	-o-transition:none !important;
+	transition:none !important;
+}
 .wobbling
 {
 	animation:wobble 0.1s ease-out;
@@ -1581,6 +1644,7 @@ q:after
 	width:220px;
 	padding:8px;
 	pointer-events:none;
+	z-index:100000000;
 }
 #legacyButton:hover>#ascendTooltip
 {display:block;}
@@ -1927,20 +1991,7 @@ from {top:20px;opacity:0;}
 	0% 		{background:#f00;}
 	100% 	{}
 }
-.punchDown{animation:punchDown 0.3s ease-out;}
-@keyframes punchDown
-{
-	0% 		{transform:translate(0px,0px);}
-	20% 		{transform:translate(0px,4px);}
-	100% 		{transform:translate(0px,0px);}
-}
-.punchUp{animation:punchUp 0.3s ease-out;}
-@keyframes punchUp
-{
-	0% 		{transform:translate(0px,0px);}
-	20% 		{transform:translate(0px,-4px);}
-	100% 		{transform:translate(0px,0px);}
-}
+
 
 #buildingsMaster
 {
@@ -2810,7 +2861,7 @@ from {background-position:0px 0px;}
 	font-size:15px;
 }
 .large .fancyText{font-size:20px;}
-#prompt h3:before,#prompt h3:after,.prompt h3:before,.prompt h3:after
+#prompt h3:before,#prompt h3:after,.prompt h3:before,.prompt h3:after,.winged:before,.winged:after
 {
 	content:'';
 	display:block;
@@ -2819,12 +2870,12 @@ from {background-position:0px 0px;}
 	position:absolute;
 	top:-4px;
 }
-#prompt h3:before,.prompt h3:before
+#prompt h3:before,.prompt h3:before,.winged:before
 {
 	background:url(img/featherLeft.png) no-repeat;
 	left:-39px;
 }
-#prompt h3:after,.prompt h3:after
+#prompt h3:after,.prompt h3:after,.winged:after
 {
 	background:url(img/featherRight.png) no-repeat;
 	right:-39px;
@@ -3048,8 +3099,8 @@ p
 */
 
 
-.green,b.green{color:#3f0;}.green b{color:inherit;}
-.red,b.red{color:#f30;}.red b{color:inherit;}
+.green,b.green{color:#73fa0c;}.green b{color:inherit;}/* #3f0 */
+.red,b.red{color:#fc0d25;}.red b{color:inherit;}/* #f30 */
 .gray,b.gray{color:#999;}.gray b{color:inherit;}
 
 #versionNumber
@@ -3285,6 +3336,8 @@ SUPPORT
 	z-index:10000000;
 	font-size:30px !important;
 }
+
+#cf_alert_div{z-index:1000000 !important;}
 
 /*=====================================================================================
 NEW AD DISPLAY
