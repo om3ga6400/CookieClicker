@@ -3,7 +3,6 @@
 xargs rm -f < _delList.txt
 mkdir -p snd loc img beta/loc beta/img beta/snd
 
-wget -O grab.txt -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" "http://orteil.dashnet.org/patreon/grab.php"
 wget -O index.html -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" "https://orteil.dashnet.org/cookieclicker"
 sed -i '/<!-- ad -->/,/<!-- \/ad -->/d' index.html
 
@@ -11,8 +10,6 @@ for i in 1 2; do
 	grep -hoE "[\"'][^/\"']+\.(js|css|html)([?][^\"']+)?[\"']" index.html *.js *.css 2>/dev/null | sed "s/[\"']//g;s/[?].*//" | sort -u > _miscList.txt
 	xargs -P 8 -I {} wget -nc "https://orteil.dashnet.org/cookieclicker/{}" < _miscList.txt
 done
-
-sed -i "s|ajax('/patreon/grab.php'|ajax('grab.txt'|" main.js
 
 wget -O- -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://orteil.dashnet.org/cookieclicker/snd/ | grep -oP '(?<=href=")[^"]+\.mp3' > snd/_sndList.txt
 wget -O- -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://orteil.dashnet.org/cookieclicker/loc/ | grep -oP '(?<=href=")[^"]+\.js' > loc/_locList.txt
@@ -37,8 +34,6 @@ for i in 1 2; do
 done
 
 cd beta/
-
-sed -i "s|ajax('/patreon/grab.php'|ajax('../grab.txt'|" main.js
 
 wget -O- -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://orteil.dashnet.org/cookieclicker/beta/snd/ | grep -oP '(?<=href=")[^"]+\.mp3' > snd/_sndList.txt
 wget -O- -U "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" https://orteil.dashnet.org/cookieclicker/beta/loc/ | grep -oP '(?<=href=")[^"]+\.js' > loc/_locList.txt
